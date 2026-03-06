@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Il Cavallo Corinzio · Siracusa</title>
+  <meta name="description" content="Il Cavallo Corinzio di Siracusa – storia, arte e identità di una città millenaria" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Cinzel:wght@400;600&family=Lato:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── RESET & BASE ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold:    #c9a84c;
+      --gold-lt: #e8cg7a;
+      --cream:   #f5f0e8;
+      --dark:    #1a1409;
+      --mid:     #3b2e10;
+      --stone:   #8c7a5a;
+      --terracotta: #9e4b28;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      font-weight: 300;
+      background: var(--dark);
+      color: var(--cream);
+      overflow-x: hidden;
+    }
+
+    /* ── LANGUAGE SWITCHER ── */
+    #lang-bar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: flex-end;
+      gap: 0;
+      padding: 0.6rem 2rem;
+      background: rgba(26, 20, 9, 0.88);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(201, 168, 76, 0.25);
+    }
+    .lang-btn {
+      background: none;
+      border: 1px solid transparent;
+      color: var(--stone);
+      font-family: 'Cinzel', serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      padding: 0.3rem 0.9rem;
+      cursor: pointer;
+      transition: all 0.25s;
+    }
+    .lang-btn:hover, .lang-btn.active {
+      color: var(--gold);
+      border-color: var(--gold);
+    }
+
+    /* ── HERO ── */
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 6rem 2rem 4rem;
+      overflow: hidden;
+    }
+
+    /* Animated geometric background */
+    #hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 30%, rgba(201,168,76,0.08) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 80% 80%, rgba(158,75,40,0.12) 0%, transparent 60%),
+        linear-gradient(175deg, #1a1409 0%, #2a1e07 40%, #1a1409 100%);
+      z-index: 0;
+    }
+
+    /* Greek key ornament band */
+    #hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+
+    .hero-horse-icon {
+      position: absolute;
+      opacity: 0.04;
+      font-size: clamp(18rem, 50vw, 38rem);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      user-select: none;
+      pointer-events: none;
+      animation: drift 20s ease-in-out infinite;
+    }
+
+    @keyframes drift {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); }
+      50% { transform: translate(-50%, -52%) scale(1.02); }
+    }
+
+    .hero-ornament {
+      font-family: 'Cinzel', serif;
+      color: var(--gold);
+      font-size: 0.7rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      opacity: 0;
+      animation: fadeUp 1s 0.3s forwards;
+      position: relative; z-index: 1;
+    }
+
+    .hero-title {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: clamp(2.2rem, 7vw, 5.5rem);
+      line-height: 1.1;
+      color: var(--cream);
+      margin: 1rem 0;
+      position: relative; z-index: 1;
+      opacity: 0;
+      animation: fadeUp 1s 0.6s forwards;
+    }
+
+    .hero-title span {
+      color: var(--gold);
+      display: block;
+    }
+
+    .hero-sub {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(0.85rem, 2vw, 1.1rem);
+      letter-spacing: 0.25em;
+      color: var(--stone);
+      margin-bottom: 3rem;
+      position: relative; z-index: 1;
+      opacity: 0;
+      animation: fadeUp 1s 0.9s forwards;
+    }
+
+    .hero-divider {
+      width: 120px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 0 auto 3rem;
+      position: relative; z-index: 1;
+      opacity: 0;
+      animation: fadeUp 1s 1.1s forwards;
+    }
+
+    .scroll-cue {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      opacity: 0;
+      animation: fadeUp 1s 1.5s forwards;
+    }
+    .scroll-cue span {
+      font-family: 'Cinzel', serif;
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      color: var(--stone);
+    }
+    .scroll-cue::after {
+      content: '';
+      display: block;
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.4; transform: scaleY(1); }
+      50% { opacity: 1; transform: scaleY(1.2); }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── GREEK KEY SVG DIVIDER ── */
+    .greek-divider {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      margin: 0 auto 4rem;
+      max-width: 600px;
+      padding: 0 2rem;
+    }
+    .greek-divider::before, .greek-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold));
+    }
+    .greek-divider::after {
+      background: linear-gradient(90deg, var(--gold), transparent);
+    }
+    .greek-symbol {
+      color: var(--gold);
+      font-size: 1.2rem;
+      opacity: 0.7;
+    }
+
+    /* ── SECTIONS ── */
+    section {
+      padding: 6rem 2rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.5em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .section-label::after {
+      content: '';
+      flex: 0 0 40px;
+      height: 1px;
+      background: var(--gold);
+      opacity: 0.5;
+    }
+
+    .section-title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.6rem, 4vw, 2.8rem);
+      color: var(--cream);
+      margin-bottom: 2rem;
+      line-height: 1.2;
+    }
+
+    .section-title em {
+      color: var(--gold);
+      font-style: normal;
+    }
+
+    p {
+      line-height: 1.9;
+      color: #c8bda8;
+      font-size: clamp(0.95rem, 2vw, 1.05rem);
+      margin-bottom: 1.4rem;
+      max-width: 72ch;
+    }
+
+    /* ── READABILITY HELPERS ── */
+    p strong.hl {
+      color: var(--cream);
+      font-weight: 400;
+      border-bottom: 1px solid rgba(201,168,76,0.4);
+      padding-bottom: 1px;
+    }
+    /* First paragraph of each section gets a subtle drop-cap treatment */
+    .lead-p {
+      font-size: clamp(1rem, 2.2vw, 1.12rem);
+      line-height: 2;
+      color: #d6cabb;
+    }
+    /* Inline accent — gold tint for key terms */
+    .accent { color: var(--gold); font-style: normal; }
+
+    /* ── PULL QUOTE ── */
+    .pull-quote {
+      border-left: 3px solid var(--gold);
+      padding: 1.5rem 2rem;
+      margin: 3rem 0;
+      background: rgba(201,168,76,0.05);
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1rem, 2.5vw, 1.3rem);
+      color: var(--cream);
+      line-height: 1.6;
+      font-style: italic;
+    }
+
+    /* ── STAT CARDS ── */
+    .stat-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1.5rem;
+      margin: 3rem 0;
+    }
+    .stat-card {
+      background: rgba(201,168,76,0.06);
+      border: 1px solid rgba(201,168,76,0.2);
+      padding: 2rem 1.5rem;
+      text-align: center;
+      position: relative;
+      transition: border-color 0.3s;
+    }
+    .stat-card:hover { border-color: rgba(201,168,76,0.6); }
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: -1px; left: 20%; right: 20%;
+      height: 2px;
+      background: var(--gold);
+    }
+    .stat-num {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 2.5rem;
+      color: var(--gold);
+      display: block;
+    }
+    .stat-label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      color: var(--stone);
+      margin-top: 0.5rem;
+      display: block;
+    }
+
+    /* ── TIMELINE ── */
+    .timeline {
+      position: relative;
+      padding-left: 3rem;
+      margin: 3rem 0;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0.5rem;
+      top: 0; bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+    }
+    .timeline-item {
+      position: relative;
+      margin-bottom: 2.5rem;
+    }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -2.5rem;
+      top: 0.4rem;
+      width: 8px;
+      height: 8px;
+      border: 1px solid var(--gold);
+      background: var(--dark);
+      transform: rotate(45deg);
+    }
+    .timeline-year {
+      font-family: 'Cinzel', serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      color: var(--gold);
+      margin-bottom: 0.4rem;
+    }
+    .timeline-text {
+      color: #c8bda8;
+      font-size: 0.95rem;
+      line-height: 1.7;
+      margin: 0;
+    }
+
+    /* ── MAP SECTION ── */
+    #map-section {
+      background: rgba(201,168,76,0.03);
+      border-top: 1px solid rgba(201,168,76,0.1);
+      border-bottom: 1px solid rgba(201,168,76,0.1);
+    }
+
+    .map-embed {
+      width: 100%;
+      height: 380px;
+      border: 1px solid rgba(201,168,76,0.2);
+      filter: sepia(0.4) saturate(0.8);
+      margin-top: 2rem;
+      border-radius: 2px;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 4rem 2rem 3rem;
+      border-top: 1px solid rgba(201,168,76,0.15);
+    }
+    .footer-logo {
+      font-family: 'Cinzel Decorative', serif;
+      font-size: 1.1rem;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+    footer p {
+      font-size: 0.78rem;
+      color: var(--stone);
+      max-width: 100%;
+      text-align: center;
+      margin: 0.3rem auto;
+    }
+    footer a {
+      color: var(--gold);
+      text-decoration: none;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+    footer a:hover { opacity: 1; }
+
+    /* ── REVEAL ANIMATION ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ── VISUAL HORSE ILLUSTRATION ── */
+    .horse-art {
+      width: 100%;
+      max-width: 500px;
+      margin: 4rem auto;
+      display: block;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      section { padding: 4rem 1.5rem; }
+      .stat-row { grid-template-columns: 1fr 1fr; }
+      .pull-quote { padding: 1rem 1.2rem; }
+    }
+
+    /* ── HIDDEN LANG CONTENT ── */
+    [data-lang] { display: none; }
+    [data-lang].lang-active { display: block; }
+    [data-lang-inline] { display: none; }
+    [data-lang-inline].lang-active { display: inline; }
+  </style>
+</head>
+<body>
+
+<!-- LANGUAGE BAR -->
+<nav id="lang-bar" role="navigation" aria-label="Language selector">
+  <button class="lang-btn active" onclick="setLang('it')">IT</button>
+  <button class="lang-btn" onclick="setLang('en')">EN</button>
+  <button class="lang-btn" onclick="setLang('de')">DE</button>
+  <button class="lang-btn" onclick="setLang('fr')">FR</button>
+</nav>
+
+<!-- HERO -->
+<header id="hero">
+  <div class="hero-horse-icon" aria-hidden="true">🐴</div>
+
+  <p class="hero-ornament">
+    <span data-lang="it" class="lang-active">Siracusa · Sicilia · VIII sec. a.C.</span>
+    <span data-lang="en">Syracuse · Sicily · VIII c. BC</span>
+    <span data-lang="de">Syrakus · Sizilien · VIII. Jh. v. Chr.</span>
+    <span data-lang="fr">Syracuse · Sicile · VIII s. av. J.-C.</span>
+  </p>
+
+  <h1 class="hero-title">
+    <span data-lang="it" class="lang-active">Il Cavallo <span style="color:var(--gold);display:block">Corinzio</span></span>
+    <span data-lang="en">The Corinthian <span style="color:var(--gold);display:block">Horse</span></span>
+    <span data-lang="de">Das Korinthische <span style="color:var(--gold);display:block">Pferd</span></span>
+    <span data-lang="fr">Le Cheval <span style="color:var(--gold);display:block">Corinthien</span></span>
+  </h1>
+
+  <p class="hero-sub">
+    <span data-lang="it" class="lang-active">Piazzale Marconi · Siracusa</span>
+    <span data-lang="en">Piazzale Marconi · Syracuse</span>
+    <span data-lang="de">Piazzale Marconi · Syrakus</span>
+    <span data-lang="fr">Piazzale Marconi · Syracuse</span>
+  </p>
+
+  <div class="hero-divider"></div>
+
+  <div class="scroll-cue" aria-hidden="true">
+    <span data-lang="it" class="lang-active">SCOPRI</span>
+    <span data-lang="en">EXPLORE</span>
+    <span data-lang="de">ENTDECKEN</span>
+    <span data-lang="fr">DÉCOUVRIR</span>
+  </div>
+</header>
+
+<!-- SVG HORSE ILLUSTRATION -->
+<div style="display:flex;justify-content:center;padding:2rem 2rem 0;position:relative;z-index:1;">
+  <svg class="horse-art reveal" viewBox="0 0 400 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cavallo Corinzio stilizzato">
+    <defs>
+      <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style="stop-color:#c9a84c;stop-opacity:1" />
+        <stop offset="100%" style="stop-color:#8c6820;stop-opacity:1" />
+      </linearGradient>
+      <filter id="glow">
+        <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+        <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+    </defs>
+    <!-- Body -->
+    <ellipse cx="200" cy="190" rx="95" ry="55" fill="url(#goldGrad)" opacity="0.15"/>
+    <!-- Body outline -->
+    <path d="M105 190 Q110 140 155 130 Q180 120 210 125 Q250 118 275 135 Q300 148 295 185 Q292 210 270 220 Q240 232 200 230 Q165 232 140 220 Q110 210 105 190Z"
+          fill="none" stroke="url(#goldGrad)" stroke-width="1.5" filter="url(#glow)"/>
+    <!-- Neck -->
+    <path d="M165 130 Q170 100 175 80 Q178 65 185 55 Q192 48 200 52 Q208 56 210 70 Q214 88 210 125"
+          fill="none" stroke="url(#goldGrad)" stroke-width="1.5"/>
+    <!-- Head -->
+    <path d="M185 55 Q178 42 180 32 Q183 20 194 18 Q205 16 210 25 Q215 34 210 45 Q207 52 200 52Z"
+          fill="none" stroke="url(#goldGrad)" stroke-width="1.5"/>
+    <!-- Mane lines -->
+    <path d="M185 55 Q175 65 168 80 Q164 92 165 105" fill="none" stroke="#c9a84c" stroke-width="0.8" opacity="0.5"/>
+    <path d="M188 52 Q178 62 172 77 Q168 90 170 105" fill="none" stroke="#c9a84c" stroke-width="0.8" opacity="0.4"/>
+    <!-- Ear -->
+    <path d="M194 18 Q196 10 200 8 Q204 10 203 18" fill="none" stroke="url(#goldGrad)" stroke-width="1.2"/>
+    <!-- Eye -->
+    <circle cx="204" cy="28" r="2" fill="#c9a84c" opacity="0.8"/>
+    <!-- Nostril -->
+    <path d="M208 42 Q211 43 210 45" fill="none" stroke="#c9a84c" stroke-width="1"/>
+    <!-- Front legs -->
+    <path d="M165 220 Q162 240 160 260 Q158 278 160 290" fill="none" stroke="url(#goldGrad)" stroke-width="1.5"/>
+    <path d="M185 228 Q183 248 182 268 Q180 282 182 290" fill="none" stroke="url(#goldGrad)" stroke-width="1.5"/>
+    <!-- Hooves front -->
+    <path d="M157 290 L163 290" stroke="#c9a84c" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M179 290 L185 290" stroke="#c9a84c" stroke-width="2.5" stroke-linecap="round"/>
+    <!-- Back legs -->
+    <path d="M235 225 Q238 245 240 265 Q242 278 240 290" fill="none" stroke="url(#goldGrad)" stroke-width="1.5"/>
+    <path d="M255 218 Q260 238 263 258 Q265 274 263 290" fill="none" stroke="url(#goldGrad)" stroke-width="1.5"/>
+    <!-- Hooves back -->
+    <path d="M237 290 L243 290" stroke="#c9a84c" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M260 290 L266 290" stroke="#c9a84c" stroke-width="2.5" stroke-linecap="round"/>
+    <!-- Tail -->
+    <path d="M295 185 Q315 175 325 160 Q330 148 322 140 Q315 135 308 145 Q302 158 295 170"
+          fill="none" stroke="url(#goldGrad)" stroke-width="1.2" opacity="0.7"/>
+    <path d="M295 185 Q318 182 330 172 Q338 162 333 150" fill="none" stroke="#c9a84c" stroke-width="0.8" opacity="0.4"/>
+    <!-- Decorative dots -->
+    <circle cx="220" cy="170" r="1.5" fill="#c9a84c" opacity="0.4"/>
+    <circle cx="230" cy="185" r="1" fill="#c9a84c" opacity="0.3"/>
+    <circle cx="215" cy="195" r="1.2" fill="#c9a84c" opacity="0.35"/>
+    <!-- Ground line -->
+    <line x1="100" y1="295" x2="300" y2="295" stroke="#c9a84c" stroke-width="0.5" opacity="0.3"/>
+    <!-- Decorative frame corners -->
+    <path d="M30 15 L30 30 M30 15 L45 15" stroke="#c9a84c" stroke-width="1" opacity="0.4"/>
+    <path d="M370 15 L370 30 M370 15 L355 15" stroke="#c9a84c" stroke-width="1" opacity="0.4"/>
+    <path d="M30 305 L30 290 M30 305 L45 305" stroke="#c9a84c" stroke-width="1" opacity="0.4"/>
+    <path d="M370 305 L370 290 M370 305 L355 305" stroke="#c9a84c" stroke-width="1" opacity="0.4"/>
+  </svg>
+</div>
+
+<!-- SECTION 1: OPERA -->
+<section id="opera" class="reveal">
+  <!-- ITALIANO -->
+  <div data-lang="it" class="lang-active">
+    <p class="section-label">L'opera</p>
+    <h2 class="section-title">Un dono alla <em>città eterna</em></h2>
+    <p class="lead-p">Il <strong class="hl">Cavallo Corinzio di Siracusa</strong> è una scultura monumentale installata a <strong class="hl">Piazzale Marconi</strong>, a pochi passi dal cuore dell'isola di Ortigia.<br>
+    Alta <strong class="hl">3,80 metri</strong> comprensiva della base, l'opera è stata realizzata dall'artista <strong class="hl">Dino Pantano</strong> ed inaugurata nel 2018, come dono della città da parte dell'associazione «Noi Albergatori».</p>
+    <p>La struttura interna è in alluminio, mentre il rivestimento esterno è in <strong class="hl">resina epossidica resistente alle intemperie</strong> — materiali scelti per garantire durabilità nel clima mediterraneo.<br>
+    L'opera riprende e amplifica le forme di un antico manufatto in bronzo conservato al <strong class="hl">Museo Archeologico «Paolo Orsi»</strong>, restituendo ai siracusani e ai visitatori un simbolo identitario di straordinaria potenza evocativa.</p>
+    <div class="pull-quote">
+      «Un collegamento tangibile con le radici storiche della città, un simbolo del passato glorioso di Siracusa e della sua aspirazione a diventare meta turistica di rilievo internazionale.»
+    </div>
+    <div class="stat-row">
+      <div class="stat-card">
+        <span class="stat-num">3,80<small style="font-size:1.2rem">m</small></span>
+        <span class="stat-label">Altezza totale</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-num">2018</span>
+        <span class="stat-label">Anno inaugurazione</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-num">38K€</span>
+        <span class="stat-label">Investimento totale</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-num">VIII</span>
+        <span class="stat-label">Sec. a.C. — originale</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ENGLISH -->
+  <div data-lang="en">
+    <p class="section-label">The artwork</p>
+    <h2 class="section-title">A gift to the <em>eternal city</em></h2>
+    <p class="lead-p">The <strong class="hl">Corinthian Horse of Syracuse</strong> is a monumental sculpture installed at <strong class="hl">Piazzale Marconi</strong>, a short distance from the historic island of Ortigia.<br>
+    Standing <strong class="hl">3.80 metres tall</strong>, the work was created by artist <strong class="hl">Dino Pantano</strong> and unveiled in 2018 as a gift to the city from the «Noi Albergatori» association.</p>
+    <p>Its internal structure is aluminium, while the exterior is clad in <strong class="hl">weather-resistant epoxy resin</strong> — materials chosen for their durability in the Mediterranean climate.<br>
+    The sculpture amplifies the forms of an ancient bronze artefact housed at the <strong class="hl">Archaeological Museum «Paolo Orsi»</strong>, returning to residents and visitors an emblem of extraordinary evocative power.</p>
+    <div class="pull-quote">
+      "A tangible connection to the city's historical roots — a symbol of Syracuse's glorious past and its aspiration to become an internationally renowned destination."
+    </div>
+    <div class="stat-row">
+      <div class="stat-card">
+        <span class="stat-num">3.80<small style="font-size:1.2rem">m</small></span>
+        <span class="stat-label">Total height</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-num">2018</span>
+        <span class="stat-label">Year unveiled</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-num">38K€</span>
+        <span class="stat-label">Total investment</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-num">VIII</span>
+        <span class="stat-label">c. BC — original</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- DEUTSCH -->
+  <div data-lang="de">
+    <p class="section-label">Das Kunstwerk</p>
+    <h2 class="section-title">Ein Geschenk an die <em>ewige Stadt</em></h2>
+    <p class="lead-p">Das <strong class="hl">Korinthische Pferd von Syrakus</strong> ist eine monumentale Skulptur, die am <strong class="hl">Piazzale Marconi</strong> aufgestellt ist, wenige Schritte vom historischen Herzen der Insel Ortygia entfernt.<br>
+    Das <strong class="hl">3,80 Meter hohe</strong> Werk wurde vom Künstler <strong class="hl">Dino Pantano</strong> geschaffen und im Jahr 2018 als Geschenk der Vereinigung «Noi Albergatori» eingeweiht.</p>
+    <p>Das innere Gerüst besteht aus Aluminium, während die Außenhülle aus <strong class="hl">witterungsbeständigem Epoxidharz</strong> gefertigt ist — Materialien, die für ihre Beständigkeit im mediterranen Klima gewählt wurden.<br>
+    Die Skulptur greift die Formen eines antiken Bronzeartifakts aus dem <strong class="hl">Archäologischen Museum «Paolo Orsi»</strong> auf und verleiht ihnen monumentale Größe.</p>
+    <div class="pull-quote">
+      „Eine greifbare Verbindung zu den historischen Wurzeln der Stadt – ein Symbol für Syrakus' glorreiche Vergangenheit und seinen Anspruch als internationale Tourismusdestination."
+    </div>
+    <div class="stat-row">
+      <div class="stat-card">
+        <span class="stat-num">3,80<small style="font-size:1.2rem">m</small></span>
+        <span class="stat-label">Gesamthöhe</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-num">2018</span>
+        <span class="stat-label">Einweihungsjahr</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-num">38K€</span>
+        <span class="stat-label">Gesamtinvestition</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-num">VIII</span>
+        <span class="stat-label">Jh. v. Chr. — Original</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- FRANÇAIS -->
+  <div data-lang="fr">
+    <p class="section-label">L'œuvre</p>
+    <h2 class="section-title">Un don à la <em>cité éternelle</em></h2>
+    <p class="lead-p">Le <strong class="hl">Cheval Corinthien de Syracuse</strong> est une sculpture monumentale installée à la <strong class="hl">Piazzale Marconi</strong>, à quelques pas du cœur historique de l'île d'Ortigia.<br>
+    Haute de <strong class="hl">3,80 mètres</strong>, l'œuvre a été réalisée par l'artiste <strong class="hl">Dino Pantano</strong> et inaugurée en 2018, comme don à la ville de la part de l'association «Noi Albergatori».</p>
+    <p>Sa structure interne est en aluminium, tandis que le revêtement extérieur est en <strong class="hl">résine époxy résistante aux intempéries</strong>.<br>
+    La sculpture reprend et amplifie les formes d'un antique objet en bronze conservé au <strong class="hl">Musée Archéologique «Paolo Orsi»</strong>, restituant aux habitants et aux visiteurs un symbole identitaire d'une extraordinaire puissance évocatrice.</p>
+    <div class="pull-quote">
+      « Un lien tangible avec les racines historiques de la ville — un symbole du glorieux passé de Syracuse et de son aspiration à devenir une destination touristique internationale. »
+    </div>
+    <div class="stat-row">
+      <div class="stat-card">
+        <span class="stat-num">3,80<small style="font-size:1.2rem">m</small></span>
+        <span class="stat-label">Hauteur totale</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-num">2018</span>
+        <span class="stat-label">Année d'inauguration</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-num">38K€</span>
+        <span class="stat-label">Investissement total</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-num">VIII</span>
+        <span class="stat-label">s. av. J.-C. — original</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DIVIDER -->
+<div class="greek-divider reveal"><span class="greek-symbol">⊕</span></div>
+
+<!-- SECTION 2: STORIA ORIGINALE -->
+<section id="storia" class="reveal">
+
+  <!-- IT -->
+  <div data-lang="it" class="lang-active">
+    <p class="section-label">Le radici</p>
+    <h2 class="section-title">L'originale bronzeo dell'<em>VIII secolo a.C.</em></h2>
+    <p class="lead-p">Prima della grande scultura moderna esiste un piccolo capolavoro: un <strong class="hl">cavalluccio in bronzo di stile tardo-geometrico</strong>, datato all'VIII secolo a.C. e conservato nel Museo Archeologico «Paolo Orsi» di Siracusa.<br>
+    Rinvenuto da <strong class="hl">Francesco Saverio Cavallari</strong> durante gli scavi nella <strong class="hl">necropoli del Fusco</strong>, questo oggetto è uno dei pezzi più rari e suggestivi dell'intera collezione museale.</p>
+    <p>Nel mondo antico la mortalità infantile era molto elevata, e nelle sepolture dei bambini si usava deporre piccoli giocattoli come corredo funebre.<br>
+    Il cavalluccio era probabilmente uno di questi oggetti votivi — <em class="accent">minuscolo nella dimensione fisica, immenso nel suo valore simbolico</em>.<br>
+    La sua delicata fattura riflette l'arte dei primissimi coloni corinzi che, nel <strong class="hl">734 a.C.</strong>, fondarono Siracusa sull'isola di Ortigia.</p>
+    <div class="timeline">
+      <div class="timeline-item">
+        <p class="timeline-year">734 a.C.</p>
+        <p class="timeline-text">I coloni corinzi guidati da Archia di Corinto fondano Siracusa sull'isola di Ortigia, introducendo arte, cultura e tradizioni dalla madrepatria.</p>
+      </div>
+      <div class="timeline-item">
+        <p class="timeline-year">VIII sec. a.C.</p>
+        <p class="timeline-text">Viene realizzato il piccolo cavalluccio in bronzo di stile tardo-geometrico, probabilmente corredo funebre di una sepoltura infantile nella necropoli del Fusco.</p>
+      </div>
+      <div class="timeline-item">
+        <p class="timeline-year">XIX sec.</p>
+        <p class="timeline-text">L'archeologo Francesco Saverio Cavallari conduce gli scavi nella necropoli del Fusco e porta alla luce il manufatto, che entra poi nella collezione del Museo Orsi.</p>
+      </div>
+      <div class="timeline-item">
+        <p class="timeline-year">2018</p>
+        <p class="timeline-text">L'artista Dino Pantano, su iniziativa dell'associazione «Noi Albergatori», crea la versione monumentale: un'opera alta 3,80 m in alluminio e resina, donata alla città.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- EN -->
+  <div data-lang="en">
+    <p class="section-label">The roots</p>
+    <h2 class="section-title">The bronze original of the <em>8th century BC</em></h2>
+    <p class="lead-p">Before the modern monumental sculpture existed a small masterpiece: a <strong class="hl">late-geometric bronze horse statuette</strong>, dated to the 8th century BC and housed at the Archaeological Museum «Paolo Orsi» in Syracuse.<br>
+    Unearthed by <strong class="hl">Francesco Saverio Cavallari</strong> during excavations of the <strong class="hl">Fusco necropolis</strong>, this object is one of the rarest and most evocative pieces in the entire museum collection.</p>
+    <p>In the ancient world, infant mortality was extremely high, and children's graves were often accompanied by small toys as funerary offerings.<br>
+    The little horse was probably one such votive object — <em class="accent">tiny in physical size, immense in symbolic value</em>.<br>
+    Its delicate craftsmanship reflects the art of the very first Corinthian colonists who, in <strong class="hl">734 BC</strong>, founded Syracuse on the island of Ortygia.</p>
+    <div class="timeline">
+      <div class="timeline-item">
+        <p class="timeline-year">734 BC</p>
+        <p class="timeline-text">Corinthian settlers led by Archias of Corinth found Syracuse on the island of Ortygia, introducing arts, culture and traditions from their homeland.</p>
+      </div>
+      <div class="timeline-item">
+        <p class="timeline-year">8th c. BC</p>
+        <p class="timeline-text">The small bronze horse in late-geometric style is made, likely as a funerary offering placed in a child's grave in the Fusco necropolis.</p>
+      </div>
+      <div class="timeline-item">
+        <p class="timeline-year">19th century</p>
+        <p class="timeline-text">Archaeologist Francesco Saverio Cavallari excavates the Fusco necropolis and uncovers the statuette, which is later added to the Orsi Museum collection.</p>
+      </div>
+      <div class="timeline-item">
+        <p class="timeline-year">2018</p>
+        <p class="timeline-text">Artist Dino Pantano, at the initiative of «Noi Albergatori», creates the monumental version: a 3.80 m artwork in aluminium and resin, gifted to the city.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- DE -->
+  <div data-lang="de">
+    <p class="section-label">Die Wurzeln</p>
+    <h2 class="section-title">Das bronzene Original aus dem <em>8. Jahrhundert v. Chr.</em></h2>
+    <p class="lead-p">Vor der modernen Monumentalskulptur existierte ein kleines Meisterwerk: ein <strong class="hl">spätgeometrisches Bronzepferdchen</strong> aus dem 8. Jahrhundert v. Chr., aufbewahrt im Archäologischen Museum «Paolo Orsi» in Syrakus.<br>
+    Von <strong class="hl">Francesco Saverio Cavallari</strong> bei Ausgrabungen der <strong class="hl">Nekropole von Fusco</strong> gefunden, ist dieses Objekt eines der seltensten und ausdrucksstärksten Stücke der gesamten Museumssammlung.</p>
+    <p>In der Antike war die Kindersterblichkeit sehr hoch, und in Kindergräbern wurden oft kleine Spielzeuge als Grabbeigaben deponiert.<br>
+    Das Pferdchen war wahrscheinlich eines dieser Votivgegenstände — <em class="accent">winzig in seiner physischen Größe, unermesslich in seinem symbolischen Wert</em>.<br>
+    Seine zarte Ausführung spiegelt die Kunst der allerersten korinthischen Kolonisten wider, die <strong class="hl">734 v. Chr.</strong> Syrakus auf der Insel Ortygia gründeten.</p>
+    <div class="timeline">
+      <div class="timeline-item">
+        <p class="timeline-year">734 v. Chr.</p>
+        <p class="timeline-text">Korinthische Siedler unter Archias von Korinth gründen Syrakus auf der Insel Ortygia und bringen Kunst, Kultur und Traditionen aus ihrer Heimat mit.</p>
+      </div>
+      <div class="timeline-item">
+        <p class="timeline-year">8. Jh. v. Chr.</p>
+        <p class="timeline-text">Das kleine Bronzepferd im spätgeometrischen Stil wird hergestellt, wahrscheinlich als Grabbeigabe für ein Kind in der Nekropole von Fusco.</p>
+      </div>
+      <div class="timeline-item">
+        <p class="timeline-year">19. Jahrhundert</p>
+        <p class="timeline-text">Der Archäologe Francesco Saverio Cavallari gräbt die Nekropole von Fusco aus und entdeckt das Artefakt, das später in die Sammlung des Orsi-Museums aufgenommen wird.</p>
+      </div>
+      <div class="timeline-item">
+        <p class="timeline-year">2018</p>
+        <p class="timeline-text">Künstler Dino Pantano schafft auf Initiative von «Noi Albergatori» die monumentale Version: ein 3,80 m hohes Werk aus Aluminium und Epoxidharz, der Stadt geschenkt.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FR -->
+  <div data-lang="fr">
+    <p class="section-label">Les racines</p>
+    <h2 class="section-title">L'original en bronze du <em>VIIIe siècle av. J.-C.</em></h2>
+    <p class="lead-p">Avant la grande sculpture moderne, il existait un petit chef-d'œuvre : une <strong class="hl">statuette de cheval en bronze de style géométrique tardif</strong>, datée du VIIIe siècle av. J.-C. et conservée au Musée Archéologique «Paolo Orsi» de Syracuse.<br>
+    Mise au jour par <strong class="hl">Francesco Saverio Cavallari</strong> lors des fouilles de la <strong class="hl">nécropole del Fusco</strong>, cet objet est l'une des pièces les plus rares et évocatrices de toute la collection.</p>
+    <p>Dans le monde antique, la mortalité infantile était très élevée, et les tombes d'enfants étaient souvent accompagnées de petits jouets.<br>
+    Le petit cheval était probablement l'un de ces objets votifs — <em class="accent">minuscule en taille, immense en valeur symbolique</em>.<br>
+    Sa facture délicate reflète l'art des tout premiers colons corinthiens qui, en <strong class="hl">734 av. J.-C.</strong>, fondèrent Syracuse sur l'île d'Ortygie.</p>
+    <div class="timeline">
+      <div class="timeline-item">
+        <p class="timeline-year">734 av. J.-C.</p>
+        <p class="timeline-text">Des colons corinthiens menés par Archias de Corinthe fondent Syracuse sur l'île d'Ortygie, apportant arts, culture et traditions de leur cité d'origine.</p>
+      </div>
+      <div class="timeline-item">
+        <p class="timeline-year">VIIIe s. av. J.-C.</p>
+        <p class="timeline-text">Le petit cheval en bronze de style géométrique tardif est fabriqué, probablement comme offrande funéraire dans la tombe d'un enfant de la nécropole del Fusco.</p>
+      </div>
+      <div class="timeline-item">
+        <p class="timeline-year">XIXe siècle</p>
+        <p class="timeline-text">L'archéologue Francesco Saverio Cavallari fouille la nécropole del Fusco et découvre l'objet, qui intègre ensuite la collection du Musée Orsi.</p>
+      </div>
+      <div class="timeline-item">
+        <p class="timeline-year">2018</p>
+        <p class="timeline-text">L'artiste Dino Pantano, à l'initiative de «Noi Albergatori», crée la version monumentale : une œuvre de 3,80 m en aluminium et résine époxy, offerte à la ville.</p>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- DIVIDER -->
+<div class="greek-divider reveal"><span class="greek-symbol">⊕</span></div>
+
+<!-- SECTION 3: VISITA -->
+<section id="map-section" class="reveal" style="max-width:100%;padding:5rem 2rem;">
+  <div style="max-width:1000px;margin:0 auto;">
+
+    <!-- IT -->
+    <div data-lang="it" class="lang-active">
+      <p class="section-label">Dove trovarla</p>
+      <h2 class="section-title">Visita il <em>Cavallo Corinzio</em></h2>
+      <p>La scultura si trova a <strong class="hl">Piazzale Marconi</strong>, a pochi passi dall'imbocco del Ponte Santa Lucia che collega Siracusa all'isola di Ortigia.<br>
+      È facilmente accessibile a piedi dal centro storico e la sua posizione ne fa un punto di riferimento per chi giunge o parte da Ortigia.<br>
+      Il <strong class="hl">Museo Archeologico «Paolo Orsi»</strong>, dove è conservato il piccolo originale in bronzo, dista circa <strong class="hl">20 minuti a piedi</strong> in direzione nord.</p>
+    </div>
+    <!-- EN -->
+    <div data-lang="en">
+      <p class="section-label">Getting there</p>
+      <h2 class="section-title">Visit the <em>Corinthian Horse</em></h2>
+      <p>The sculpture stands at <strong class="hl">Piazzale Marconi</strong>, a short walk from the foot of Ponte Santa Lucia, the bridge connecting Syracuse to the island of Ortygia.<br>
+      It is easily accessible on foot from the historic centre and serves as a landmark for those arriving or departing from Ortygia.<br>
+      The <strong class="hl">Archaeological Museum «Paolo Orsi»</strong>, home to the small bronze original, is around <strong class="hl">20 minutes on foot</strong> heading north.</p>
+    </div>
+    <!-- DE -->
+    <div data-lang="de">
+      <p class="section-label">Anfahrt</p>
+      <h2 class="section-title">Das <em>Korinthische Pferd</em> besuchen</h2>
+      <p>Die Skulptur steht am <strong class="hl">Piazzale Marconi</strong>, wenige Schritte vom Fuß der Ponte Santa Lucia entfernt, der Brücke, die Syrakus mit der Insel Ortygia verbindet.<br>
+      Sie ist vom historischen Zentrum leicht zu Fuß erreichbar.<br>
+      Das <strong class="hl">Archäologische Museum «Paolo Orsi»</strong> mit dem kleinen Bronzeoriginal befindet sich etwa <strong class="hl">20 Gehminuten</strong> in nördlicher Richtung.</p>
+    </div>
+    <!-- FR -->
+    <div data-lang="fr">
+      <p class="section-label">S'y rendre</p>
+      <h2 class="section-title">Visiter le <em>Cheval Corinthien</em></h2>
+      <p>La sculpture se dresse à la <strong class="hl">Piazzale Marconi</strong>, à quelques pas du pied du Ponte Santa Lucia, le pont reliant Syracuse à l'île d'Ortygie.<br>
+      Facilement accessible à pied depuis le centre historique, elle constitue un repère pour ceux qui arrivent ou repartent d'Ortygie.<br>
+      Le <strong class="hl">Musée Archéologique «Paolo Orsi»</strong>, où est conservé le petit original en bronze, se trouve à environ <strong class="hl">20 minutes à pied</strong> vers le nord.</p>
+    </div>
+
+    <iframe
+      class="map-embed"
+      loading="lazy"
+      allowfullscreen
+      referrerpolicy="no-referrer-when-downgrade"
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3154.2!2d15.2924!3d37.0699!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x131821070c6ca6b3%3A0x89efb1c2e50c9451!2sCavallo%20Corinzio!5e0!3m2!1sit!2sit!4v1700000000000"
+      title="Mappa Cavallo Corinzio Siracusa">
+    </iframe>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Il Cavallo Corinzio</div>
+  <div class="greek-divider" style="margin-bottom:1.5rem;"><span class="greek-symbol" style="font-size:0.8rem">✦</span></div>
+
+  <!-- IT -->
+  <div data-lang="it" class="lang-active">
+    <p>Piazzale Marconi · Siracusa, Sicilia · Italia</p>
+    <p>Opera di <strong style="color:var(--cream)">Dino Pantano</strong> · Promossa da «Noi Albergatori» · 2018</p>
+    <p style="margin-top:1.2rem;">Originale bronzeo conservato presso il <a href="https://www.regione.sicilia.it/beniculturali/museoorsi/" target="_blank" rel="noopener">Museo Archeologico «Paolo Orsi»</a>, Siracusa</p>
+    <p style="margin-top:1rem;opacity:0.5;font-size:0.7rem;">Sito realizzato gratuitamente da Francesco Gibilisco · Nessun cookie · Nessun tracciamento</p>
+  </div>
+  <!-- EN -->
+  <div data-lang="en">
+    <p>Piazzale Marconi · Syracuse, Sicily · Italy</p>
+    <p>Artwork by <strong style="color:var(--cream)">Dino Pantano</strong> · Promoted by «Noi Albergatori» · 2018</p>
+    <p style="margin-top:1.2rem;">Bronze original at the <a href="https://www.regione.sicilia.it/beniculturali/museoorsi/" target="_blank" rel="noopener">Archaeological Museum «Paolo Orsi»</a>, Syracuse</p>
+    <p style="margin-top:1rem;opacity:0.5;font-size:0.7rem;">Made by Francesco Gibilisco · No cookies · No tracking</p>
+  </div>
+  <!-- DE -->
+  <div data-lang="de">
+    <p>Piazzale Marconi · Syrakus, Sizilien · Italien</p>
+    <p>Werk von <strong style="color:var(--cream)">Dino Pantano</strong> · Gefördert von «Noi Albergatori» · 2018</p>
+    <p style="margin-top:1.2rem;">Bronzeoriginal im <a href="https://www.regione.sicilia.it/beniculturali/museoorsi/" target="_blank" rel="noopener">Archäologischen Museum «Paolo Orsi»</a>, Syrakus</p>
+    <p style="margin-top:1rem;opacity:0.5;font-size:0.7rem;">Hergestellt von Francesco Gibilisco · Keine Cookies · Kein Tracking</p>
+  </div>
+  <!-- FR -->
+  <div data-lang="fr">
+    <p>Piazzale Marconi · Syracuse, Sicile · Italie</p>
+    <p>Œuvre de <strong style="color:var(--cream)">Dino Pantano</strong> · Promue par «Noi Albergatori» · 2018</p>
+    <p style="margin-top:1.2rem;">Original en bronze au <a href="https://www.regione.sicilia.it/beniculturali/museoorsi/" target="_blank" rel="noopener">Musée Archéologique «Paolo Orsi»</a>, Syracuse</p>
+    <p style="margin-top:1rem;opacity:0.5;font-size:0.7rem;">Réalisé par Francesco Gibilisco · Aucun cookie · Aucun suivi</p>
+  </div>
+</footer>
+
+<script>
+  /* ── LANGUAGE SWITCHING ── */
+  function setLang(lang) {
+    document.querySelectorAll('[data-lang]').forEach(el => {
+      el.classList.toggle('lang-active', el.dataset.lang === lang);
+    });
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.textContent.trim() === lang.toUpperCase());
+    });
+    document.documentElement.lang = lang;
+  }
+
+  /* ── SCROLL REVEAL ── */
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  /* ── AUTO-DETECT LANG ── */
+  const browserLang = navigator.language.slice(0, 2);
+  const supported = ['it', 'en', 'de', 'fr'];
+  if (supported.includes(browserLang)) setLang(browserLang);
+</script>
+</body>
+</html>
